@@ -175,10 +175,10 @@ public class ChargingStationService {
 		);
 	}
 
-	public void chargerStatusUpdate(String statId){
+	public void chargerStatusUpdate(String statId) {
 		WebClient webClient = WebClient.create();
-
-		String serviceKey = "%2B61CsEc7Nmo65NvzqtjoQh0FPR0CAdc45WlyZDPkxYDqeSxUJ4E1ncpqn2H2qyN%2BHFXNqJD6JbNbghaWu9Tctw%3D%3D";
+//		String serviceKey = "%2B61CsEc7Nmo65NvzqtjoQh0FPR0CAdc45WlyZDPkxYDqeSxUJ4E1ncpqn2H2qyN%2BHFXNqJD6JbNbghaWu9Tctw%3D%3D";
+		String serviceKey = "xfxRkd9Ntag%2BmgCGh3yh%2B9f77aTMJlLPKaU7UMGBz9LnmwW3%2BnEtYZR6GRt%2BiyknBmvdVlkdC86laKLBVVttsw%3D%3D";
 		String numOfRows = "100";
 		String pageNo = "1";
 
@@ -197,43 +197,27 @@ public class ChargingStationService {
 				.bodyToMono(String.class)
 				.block();
 
-
-		HashMap<String, Object> responseMap;
-
+		HashMap hashMap = null;
 		try {
-			responseMap = objectMapper.readValue(response, HashMap.class);
+			hashMap = objectMapper.readValue(response, HashMap.class);
 		} catch (JsonProcessingException e) {
 			throw new RuntimeException("JSON 파싱 오류", e);
 		}
 
-//		ChargingStationUpdateDto dto = new ChargingStationUpdateDto();
-//		dto.setStatId(statId);
-//		dto.setStatNm((String) responseMap.get("statNm"));
-//		dto.setLat((Double)responseMap.get("lat"));
-//		dto.setLng((Double)responseMap.get("lng"));
-//		dto.setAddr((String) responseMap.get("addr"));
-//		dto.setBusiNm((String)responseMap.get("busiNm"));
-//		dto.setDelDetail((String)responseMap.get("delDetail"));
-//		dto.setDelYn((String)responseMap.get("delYn"));
-//		dto.setKind((String)responseMap.get("kind"));
-//		dto.setKindDetail((String)responseMap.get("kindDetail"));
-//		dto.setLimitDetail((String)responseMap.get("limitDetail"));
-//		dto.setLimitYn((String)responseMap.get("limitYn"));
-//		dto.setLocation((String)responseMap.get("location"));
-//		dto.setNote((String)responseMap.get("note"));
-//		dto.setParkingFree((String)responseMap.get("parkingFree"));
-//		dto.setTrafficYn((String) responseMap.get("trafficYn"));
-//		dto.setUseTime((String) responseMap.get("useTime"));
-//		dto.setZscode((String) responseMap.get("zscode"));
+		ArrayList item = (ArrayList) ((HashMap) ((ArrayList) hashMap.get("items")).get(0)).get("item");
 
-		try {
+
+		for (Object object : item) {
+			HashMap responseMap = (HashMap) object;
+			Class<?> type = responseMap.get("lat").getClass();
+			System.out.println(type);
+
 			ChargingStation chargingStation = ChargingStation.builder()
 					.statId(statId)
 					.statNm((String) responseMap.get("statNm"))
-					.lat((Double) responseMap.get("lat"))
-					.lng((Double) responseMap.get("lng"))
+					.lat(Double.parseDouble((String) responseMap.get("lat")))
+					.lng(Double.parseDouble((String) responseMap.get("lng")))
 					.addr((String) responseMap.get("addr"))
-					.busiNm((String) responseMap.get("busiNm"))
 					.delDetail((String) responseMap.get("delDetail"))
 					.delYn((String) responseMap.get("delYn"))
 					.kind((String) responseMap.get("kind"))
@@ -245,15 +229,10 @@ public class ChargingStationService {
 					.parkingFree((String) responseMap.get("parkingFree"))
 					.trafficYn((String) responseMap.get("trafficYn"))
 					.useTime((String) responseMap.get("useTime"))
-//				.zscode((String) responseMap.get("zscode"))
 					.build();
 
 			chargingStationRepository.save(chargingStation);
-		} catch (Exception e) {
-
 		}
-
 	}
-
 
 }
