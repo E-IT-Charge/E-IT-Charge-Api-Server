@@ -82,6 +82,7 @@ const ChargingStationMap = () => {
     const swLatLng = bounds.getSouthWest(); // 영역의 남서쪽 좌표 가져오기
     const neLatLng = bounds.getNorthEast(); // 영역의 북동쪽 좌표 가져오기
 
+
     HttpGet("/api/v1/chargingStation/location/search", {
       swLat: swLatLng.getLat(),
       swLng: swLatLng.getLng(),

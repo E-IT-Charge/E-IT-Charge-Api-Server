@@ -174,14 +174,18 @@ const ReportDetail = () => {
             <Typography variant="subtitle2">{`[유형] 충전소: [${data.reportType}] ${data.statNm}`}</Typography>
             <Typography variant="subtitle2">{`위치: ${data.addr}`}</Typography>
             <Typography variant="subtitle2">{`신고자: ${data.memberName}`}</Typography>
-            <Typography variant="subtitle2">{`작성일: ${formatDate(
-              data.createDate
-            )}`}</Typography>
+            <Typography
+              variant="subtitle2"
+              style={{ marginBottom: "5px" }}
+            >{`작성일: ${formatDate(data.createDate)}`}</Typography>
+            <Typography
+              variant="subtitle1"
+              style={{ fontWeight: "bold" }}
+            >{`제목: ${data.title}`}</Typography>
           </Box>
           <hr />
 
           <Box alignItems="center" my={2} px={2} height={200}>
-            <Typography variant="body1">{data.title}</Typography>
             <Typography
               variant="subtitle2"
               style={{

@@ -1,92 +1,100 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { HttpGet, HttpPost } from '../../services/HttpService';
-import {Button, TextField, Box, Typography, Container, Grid} from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { HttpGet, HttpPost } from "../../services/HttpService";
 
 const Signup = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [password2, setPassword2] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
   const [checkId, setCheckId] = useState(null);
   const navigate = useNavigate();
 
   const handleCheckid = async () => {
     try {
-      HttpGet(`/api/v1/members/checkid/${username}`)
-      .then((response) => {
+      HttpGet(`/api/v1/members/checkid/${username}`).then((response) => {
         console.log(response);
         if (response) {
-          alert('사용 가능한 ID 입니다');
+          alert("사용 가능한 ID 입니다");
           setCheckId(true);
         } else {
-          alert('이미 사용중인 ID 입니다');
+          alert("이미 사용중인 ID 입니다");
           setCheckId(false);
         }
 
         console.log(checkId);
-       })
-      }catch(error){
-        console.error(error);
-       }
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleSignup = async () => {
     try {
-      HttpPost(
-        '/api/v1/members/signup',
-        {
-          username: username,
-          password1: password,
-          password2: password2
-        }
-      ).then((response) => {
+      HttpPost("/api/v1/members/signup", {
+        username: username,
+        password1: password,
+        password2: password2,
+      }).then((response) => {
         // 회원가입 성공시 처리
-        console.log('Signup successful:' , response);
+        console.log("Signup successful:", response);
         alert("회원 가입 성공!");
-        navigate('/login');
-      })
-
+        navigate("/login");
+      });
     } catch (error) {
       // 회원가입 실패 시 처리
-      if(username === ''){
-        alert("Username은 필수 입력 항목입니다.")
-      }else if(password ===  ''){
-        alert("Password은 필수 입력 항목입니다.")
-      }else if(password2 === ''){
-        alert("Passsword Confirm은 필수 입력 항목입니다.")
+      if (username === "") {
+        alert("Username은 필수 입력 항목입니다.");
+      } else if (password === "") {
+        alert("Password은 필수 입력 항목입니다.");
+      } else if (password2 === "") {
+        alert("Passsword Confirm은 필수 입력 항목입니다.");
       }
 
-      if(error.response.data.resultCode === '400-1'){
+      if (error.response.data.resultCode === "400-1") {
         alert("두개의 비밀번호가 일치하지 않습니다.");
-      }
-      else if(error.response.data.resultCode === '400-2'){
+      } else if (error.response.data.resultCode === "400-2") {
         alert("이미 존재하는 회원입니다.");
       }
 
-      console.error('Signup failed:', error.response.data);      
+      console.error("Signup failed:", error.response.data);
     }
   };
 
   return (
-
-  
-
-    <Container component="main" maxWidth="xs">
+    <Container
+      component="main"
+      maxWidth="xs"
+      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+    >
       <Box
         sx={{
           marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "60vh",
         }}
       >
         <Typography component="h1" variant="h5">
           회원가입
         </Typography>
-        <Box component="form" onSubmit={(e) => e.preventDefault()} noValidate sx={{ mt: 3 }}>
-        <Grid container spacing={2} alignItems="flex-end">
-            <Grid item xs={9}>
+        <Box
+          component="form"
+          onSubmit={(e) => e.preventDefault()}
+          noValidate
+          sx={{ mt: 3 }}
+        >
+          <Grid container spacing={2} alignItems="flex-end">
+            <Grid item xs={8}>
               <TextField
                 variant="outlined"
                 required
@@ -99,18 +107,26 @@ const Signup = () => {
                 onChange={(e) => setUsername(e.target.value)}
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <Button
                 variant="contained"
-                sx={{ height: '100%' }}
                 onClick={handleCheckid}
+                style={{ width: "110px", height: "55px", marginLeft: "8px" }} // 픽셀 단위로 높이를 지정
               >
                 중복 확인
               </Button>
-              </Grid>
+            </Grid>
           </Grid>
-          {checkId === true && <Typography sx={{ color: 'green' }}>✔️ 사용 가능한 ID 입니다.</Typography>}
-          {checkId === false && <Typography sx={{ color: 'red' }}>❌ 이미 사용 중인 ID 입니다.</Typography>}
+          {checkId === true && (
+            <Typography sx={{ color: "green" }}>
+              ✔️ 사용 가능한 ID 입니다.
+            </Typography>
+          )}
+          {checkId === false && (
+            <Typography sx={{ color: "red" }}>
+              ❌ 이미 사용 중인 ID 입니다.
+            </Typography>
+          )}
           <TextField
             variant="outlined"
             margin="normal"

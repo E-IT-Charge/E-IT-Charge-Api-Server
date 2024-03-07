@@ -158,7 +158,8 @@ const Inquiry = () => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-        <Button
+        {isLogin()?(
+          <Button
           variant="contained"
           color="primary"
           size="medium"
@@ -167,6 +168,8 @@ const Inquiry = () => {
         >
           새 글쓰기
         </Button>
+
+        ):null}
       </Box>
     </Box>
   );

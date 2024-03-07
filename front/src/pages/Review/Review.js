@@ -102,7 +102,7 @@ const Review = ({ chargingStationId }) => {
 
   return (
     <div>
-      <Typography variant="subtitle1">이용후기</Typography>
+      <Typography variant="subtitle1" style={{marginTop: "20px"}}>이용후기</Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

@@ -105,7 +105,7 @@ const ChargingStationSearch = () => {
           color="primary"
           aria-label="search"
           style={{
-            bottom: "100px",
+            bottom: "5%",
             left: "10px",
             position: "fixed",
             zIndex: 9999,

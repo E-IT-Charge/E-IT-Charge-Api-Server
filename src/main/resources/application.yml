@@ -55,10 +55,10 @@ spring:
             user-name-attribute: id
 logging:
   level:
-    com.ll.eitcharge: DEBUG
+    com.ll.eitcharge: INFO
     org.hibernate.SQL: DEBUG
-    org.hibernate.orm.jdbc.bind: TRACE
-    org.hibernate.orm.jdbc.extract: TRACE
+    org.hibernate.orm.jdbc.bind: INFO
+    org.hibernate.orm.jdbc.extract: INFO
     org.springframework.transaction.interceptor: TRACE
 custom:
   dev:

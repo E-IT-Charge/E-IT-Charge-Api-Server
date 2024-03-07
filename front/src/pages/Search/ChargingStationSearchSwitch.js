@@ -37,7 +37,7 @@ const ChargingStationSearchSwitch = ({
   };
 
   return (
-    <Box sx={{ zIndex: 9999, position: "fixed", top: "10%", left: "0%" }}>
+    <Box sx={{ zIndex: 9999, position: "fixed", top: "17%", left: "0%" }}>
       <Box style={{ cursor: "pointer", zIndex: "3" }}>
         <Card
           style={{

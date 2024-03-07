@@ -8,10 +8,11 @@ import githubLogo from '../../assets/image/github-logo.png'; // 깃허브 로고
 const Footer = () => {
   return (
     <div className="footer">
+      
       <p>E-IT Charge All rights reserved.</p>
-      <a href="https://github.com/E-IT-Charge" target="_blank" rel="noreferrer">
+      {/* <a href="https://github.com/E-IT-Charge" target="_blank" rel="noreferrer">
         <img src={githubLogo} alt="github" />
-      </a>
+      </a> */}
     </div>
   );
 };

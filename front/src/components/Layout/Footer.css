@@ -5,16 +5,17 @@
   bottom: 0;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-top: 1px solid #dee2e6;
+  padding: 10px;
+  background-color: white;
+  
 }
 
   
   .footer p {
     margin: 0;
+    color: black; 
   }
   
   .footer img {

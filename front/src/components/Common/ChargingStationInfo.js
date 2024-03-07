@@ -15,7 +15,7 @@ const ChargingStationInfo = ({item}) => {
 
   return (
     <div>
-    <Typography variant="subtitle1"> {item.statNm} 충전소 | {item.addr}</Typography>
+    <Typography variant="subtitle1" style={{marginTop: "20px"}}> {item.statNm} 충전소 | {item.addr}</Typography>
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
