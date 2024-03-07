@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ll.eitcharge.domain.charger.charger.entity.Charger;
 import com.ll.eitcharge.domain.charger.charger.entity.ChargerType;
 import com.ll.eitcharge.domain.charger.charger.repository.ChargerRepository;
-import com.ll.eitcharge.domain.chargingStation.chargingStation.dto.ChargerStateDto;
-import com.ll.eitcharge.domain.chargingStation.chargingStation.dto.ChargingStationSearchBaseDistanceResponseDto;
-import com.ll.eitcharge.domain.chargingStation.chargingStation.dto.ChargingStationSearchItemResponseDto;
-import com.ll.eitcharge.domain.chargingStation.chargingStation.dto.ChargingStationSearchResponseDto;
+import com.ll.eitcharge.domain.chargingStation.chargingStation.dto.*;
 import com.ll.eitcharge.domain.chargingStation.chargingStation.entity.ChargingStation;
 import com.ll.eitcharge.domain.chargingStation.chargingStation.repository.ChargingStationRepository;
 import com.ll.eitcharge.domain.chargingStation.chargingStation.repository.ChargingStationSearchRepository;
@@ -176,5 +173,66 @@ public class ChargingStationService {
 		return chargingStationSearchRepository.searchBaseDistance(
 			stat, limitYn, parkingFree, zcode, zscode, isPrimary, busiIds, chgerTypes, kw, lat, lng, range, pageable
 		);
+	}
+
+	public void chargerStatusUpdate(String statId){
+		WebClient webClient = WebClient.create();
+
+		String serviceKey = "%2B61CsEc7Nmo65NvzqtjoQh0FPR0CAdc45WlyZDPkxYDqeSxUJ4E1ncpqn2H2qyN%2BHFXNqJD6JbNbghaWu9Tctw%3D%3D";
+		String numOfRows = "100";
+		String pageNo = "1";
+
+		URI uri = UriComponentsBuilder.fromUriString("https://apis.data.go.kr/B552584/EvCharger/getChargerInfo")
+				.queryParam("serviceKey", serviceKey)
+				.queryParam("numOfRows", numOfRows)
+				.queryParam("pageNo", pageNo)
+				.queryParam("statId", statId)
+				.build(true)
+				.toUri();
+
+		String response = webClient.get()
+				.uri(uri)
+				.header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+				.retrieve()
+				.bodyToMono(String.class)
+				.block();
+
+
+		HashMap<String, Object> responseMap;
+
+		try {
+			responseMap = objectMapper.readValue(response, HashMap.class);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException("JSON 파싱 오류", e);
+		}
+
+
+		try {
+			ChargingStation chargingStation = ChargingStation.builder()
+					.statId(statId)
+					.statNm((String) responseMap.get("statNm"))
+					.lat((Double) responseMap.get("lat"))
+					.lng((Double) responseMap.get("lng"))
+					.addr((String) responseMap.get("addr"))
+					.busiNm((String) responseMap.get("busiNm"))
+					.delDetail((String) responseMap.get("delDetail"))
+					.delYn((String) responseMap.get("delYn"))
+					.kind((String) responseMap.get("kind"))
+					.kindDetail((String) responseMap.get("kindDetail"))
+					.limitDetail((String) responseMap.get("limitDetail"))
+					.limitYn((String) responseMap.get("limitYn"))
+					.location((String) responseMap.get("location"))
+					.note((String) responseMap.get("note"))
+					.parkingFree((String) responseMap.get("parkingFree"))
+					.trafficYn((String) responseMap.get("trafficYn"))
+					.useTime((String) responseMap.get("useTime"))
+//				.zscode((String) responseMap.get("zscode"))
+					.build();
+
+			chargingStationRepository.save(chargingStation);
+		} catch (Exception e) {
+
+		}
+
 	}
 }

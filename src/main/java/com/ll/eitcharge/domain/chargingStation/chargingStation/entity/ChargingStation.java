@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ll.eitcharge.domain.charger.charger.entity.Charger;
-import com.ll.eitcharge.domain.chargingStation.chargingStation.dto.ChargingStationUpdateDto;
-import com.ll.eitcharge.domain.inquiry.inquiry.dto.InquiryRequestDto;
 import com.ll.eitcharge.domain.operatingCompany.operatingCompany.entity.OperatingCompany;
 import com.ll.eitcharge.domain.region.regionDetail.entity.RegionDetail;
 import com.ll.eitcharge.domain.report.report.entity.Report;
@@ -86,24 +84,4 @@ public class ChargingStation {
     //충전소 구분 상세 코드
     private String kindDetail;
 
-    public void update(ChargingStationUpdateDto dto) {
-        this.statNm = dto.getStatNm();
-        this.addr = dto.getAddr();
-        this.location = dto.getLocation();
-        this.useTime = dto.getUseTime();
-        this.lat = dto.getLat();
-        this.lng = dto.getLng();
-        this.busiNm = dto.getBusiNm();
-        this.busiCall = dto.getBusiCall();
-        this.parkingFree = dto.getParkingFree();
-        this.note = dto.getNote();
-        this.limitYn = dto.getLimitYn();
-        this.limitDetail = dto.getLimitDetail();
-        this.delYn = dto.getDelYn();
-        this.delDetail = dto.getDelDetail();
-        this.trafficYn = dto.getTrafficYn();
-        this.kind = dto.getKind();
-        this.kindDetail = dto.getKindDetail();
-
-    }
 }
