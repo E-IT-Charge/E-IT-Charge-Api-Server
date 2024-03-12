@@ -21,6 +21,7 @@ public class InquiryResponseDto {
     private Boolean isPublished;
     private int viewCount;
     private LocalDateTime createdDate;
+    private String S3fileUrl;
 
     public InquiryResponseDto(Inquiry entity) {
         this.id = entity.getId();
@@ -32,5 +33,6 @@ public class InquiryResponseDto {
         this.isPublished = entity.getIsPublished();
         this.viewCount = entity.getViewCount();
         this.createdDate = entity.getCreatedDate();
+        this.S3fileUrl = entity.getS3fileUrl();
     }
 }

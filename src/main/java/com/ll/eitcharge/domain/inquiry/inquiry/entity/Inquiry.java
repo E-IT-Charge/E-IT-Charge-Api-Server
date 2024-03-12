@@ -32,12 +32,14 @@ public class Inquiry extends BaseTime {
     private Boolean isPublished;
     @OneToMany(mappedBy = "inquiry", cascade = CascadeType.ALL)
     private List< Comment > comments;
+    private String S3fileUrl;
 
     public void update(InquiryRequestDto inquiryRequestDto) {
         this.title = inquiryRequestDto.getTitle();
         this.content = inquiryRequestDto.getContent();
         this.inquiryType = inquiryRequestDto.getInquiryType();
         this.isPublished = inquiryRequestDto.getIsPublished();
+//        this.S3fileUrl = inquiryRequestDto.getS3fileUrl();
     }
 
     public void increaseViewCount(){

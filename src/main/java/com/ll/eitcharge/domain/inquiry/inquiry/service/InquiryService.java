@@ -39,13 +39,14 @@ public class InquiryService {
     }
 
     @Transactional
-    public InquiryResponseDto create(InquiryRequestDto requestDto, String username) {
+    public InquiryResponseDto create(InquiryRequestDto requestDto, String username, String S3fileUrl) {
         Inquiry inquiry = Inquiry.builder()
                 .content(requestDto.getContent())
                 .title(requestDto.getTitle())
                 .inquiryType(requestDto.getInquiryType())
                 .isPublished(requestDto.getIsPublished())
                 .writer(memberService.findByUsername(username).orElseThrow(GlobalException.E404::new))
+                .S3fileUrl(S3fileUrl)
                 .inquiryState("답변대기")
                 .build();
         inquiryRepository.save(inquiry);
@@ -94,5 +95,10 @@ public class InquiryService {
             Inquiry inquiry = all.get(i);
             if(!inquiry.getComments().isEmpty()) inquiry.updateComplete();
         }
+    }
+
+    @Transactional
+    public void saveS3FileUrl(String fileName) {
+
     }
 }

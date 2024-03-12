@@ -19,5 +19,6 @@ public class InquiryRequestDto {
     @NonNull
     private String inquiryType;
     private Boolean isPublished;
+    private String s3fileName;
 
 }
